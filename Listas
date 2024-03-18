@@ -1,0 +1,324 @@
+//lISTA LINEAR
+//lISTA LINEAR
+#include <stdio.h>
+#include <stdlib.h>
+
+struct tipoNo{
+  int valor;
+  struct tipoNo *prox;
+};
+
+int main(void) {
+    struct tipoNo *head = NULL, *no;
+    int qtd;
+    do{
+        printf("Digite um valor: ");
+        scanf("%i", &qtd);
+        if(!(no =malloc(sizeof(struct tipoNo)))){
+            printf("Faltou memória!");
+            exit(1);
+        }
+        no -> prox = head;
+        head = no;
+        no -> valor = qtd;
+    }while(qtd>0);
+    printf("\nLista criada.");
+    printf("\nMostrando a lista:\n");
+    no = head;
+    while(no != NULL){
+        printf("Valor: %i \n", no->valor);
+        no = no -> prox;
+    };
+    printf("Destruindo a lista.\n");
+    no = head;
+    while(no != NULL){
+        head = head -> prox;
+        free(no);
+        no = head;
+    };
+    return 0;
+}
+
+
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct tipoNo{
+  int valor;
+  struct tipoNo *prox;
+};
+int mostrarlista(struct tipoNo *parm);
+int apagarlista(struct tipoNo **parmtop);
+
+int main(void) {
+    struct tipoNo *head = NULL, *no;
+    int qtd;
+    printf("Digite cinco numeros: \n");
+    for(int i=0; i < 5; i++){
+        printf("Digite um valor: ");
+        scanf("%i", &qtd);
+        if(!(no =malloc(sizeof(struct tipoNo)))){
+            printf("Faltou memória!");
+            exit(1);
+        }
+        no -> prox = head;
+        head = no;
+        no -> valor = qtd;   
+    }
+    printf("\nLista criada.");
+    printf("\nMostrando a lista:\n");
+    no = head;
+    mostrarlista(no);
+    printf("Destruindo a lista.\n");
+    apagarlista(&head);
+    return 0;
+}
+
+int mostrarlista(struct tipoNo *parm){
+    while(parm !=NULL){
+        printf("Valor: %i \n", parm->valor);
+        parm = parm -> prox;
+    }
+}
+int apagarlista(struct tipoNo **parmtop){
+        struct tipoNo *aux;
+        aux = *parmtop;
+        while(aux != NULL){
+        *parmtop = (*parmtop) -> prox;
+        free(aux);
+        aux = *parmtop;
+    }
+}
+
+
+//Lista que mostra a média
+#include <stdio.h>
+#include <stdlib.h>
+
+struct tipoNo{
+  int valor;
+  struct tipoNo *prox;
+};
+
+void criarlista(struct tipoNo **parm);
+void mostrarlista(struct tipoNo *parm);
+void apagarlista(struct tipoNo **parmtop);
+int contarlista(struct tipoNo *parm);
+int somalista(struct tipoNo *parm);
+void mostramedia(struct tipoNo *parm, int soma, int qtd);
+
+int main(void) {
+    struct tipoNo *head = NULL;
+    criarlista(&head);
+    mostrarlista(head);
+    mostramedia(head,somalista(head),contarlista(head));
+    apagarlista(&head);
+    return 0;
+}
+
+void criarlista(struct tipoNo **parm){
+    int aux=1;
+    struct tipoNo *no;
+    do{
+        printf("Digite um valor: ");
+        scanf("%i", &aux);
+        if(!(no =malloc(sizeof(struct tipoNo)))){
+            printf("Faltou memória!");
+            exit(1);
+        }
+        no -> prox = *parm;
+        *parm = no;
+        no -> valor = aux;   
+    }while(aux>0);
+    printf("\nLista criada.");
+}
+
+void mostrarlista(struct tipoNo *parm){
+    struct tipoNo *aux;
+    aux = parm;
+    printf("\nMostrando a lista:\n");
+    while(aux !=NULL){
+        printf("Valor: %i \n", aux -> valor);
+        aux = aux -> prox;
+    }
+}
+
+void apagarlista(struct tipoNo **parmtop){
+    struct tipoNo *aux;
+    aux = *parmtop;
+    printf("Destruindo a lista.\n");
+    while(aux != NULL){
+        *parmtop = (*parmtop) -> prox;
+        free(aux);
+        aux = *parmtop;
+    }
+}
+
+int contarlista(struct tipoNo *parm){
+    int qtd = 0;
+    struct tipoNo *aux;
+    aux = parm;
+    while(aux !=NULL){
+        qtd = qtd + 1;
+        aux = aux -> prox;
+    }
+    return qtd;
+}
+
+int somalista(struct tipoNo *parm){
+    int soma = 0;
+    struct tipoNo *aux;
+    aux = parm;
+    while(aux !=NULL){
+        soma = soma + aux -> valor;
+        aux = aux -> prox;
+    }
+    return soma;
+}
+
+void mostramedia(struct tipoNo *parm, int soma, int qtd){
+    float media;
+    struct tipoNo *aux;
+    aux = parm;
+    media = soma/qtd;
+    printf("\nMostrando valores acima da média:\n");
+    while(aux !=NULL){
+        if(aux -> valor > media){
+            printf("Valor: %i \n", aux -> valor);
+        }
+        aux = aux -> prox;
+    }
+}
+
+
+
+
+//pesquisar na lista
+#include <stdio.h>
+#include <stdlib.h>
+
+struct tipoNo{
+  int valor;
+  struct tipoNo *prox;
+};
+
+void criarlista (struct tipoNo **parm);
+void mostrarlista (struct tipoNo *parm);
+void apagarlista (struct tipoNo **parmtop);
+int contarlista (struct tipoNo *parm);
+int somalista (struct tipoNo *parm);
+void mostramedia(struct tipoNo *parm, int soma, int qtd);
+void pesquisalista(struct tipoNo *parm, int qtd);
+
+int main(void){
+    struct tipoNo *head = NULL;
+    criarlista(&head);
+    mostrarlista(head);
+    mostramedia(head,somalista(head),contarlista(head));
+    pesquisalista(head,contarlista(head));
+    apagarlista(&head);
+    return 0;
+}
+
+void criarlista(struct tipoNo **parm){
+    int aux=1;
+    struct tipoNo *no;
+    do{
+        printf("Digite um valor: ");
+        scanf("%i", &aux);
+        if(!(no =malloc(sizeof(struct tipoNo)))){
+            printf("Faltou memória!");
+            exit(1);
+        }
+        no -> prox = *parm;
+        *parm = no;
+        no -> valor = aux;   
+    }while(aux>0);
+    printf("\nLista criada.");
+}
+
+void mostrarlista(struct tipoNo *parm){
+    struct tipoNo *aux;
+    aux = parm;
+    printf("\nMostrando a lista:\n");
+    while(aux !=NULL){
+        printf("Valor: %i \n", aux -> valor);
+        aux = aux -> prox;
+    }
+}
+
+void apagarlista(struct tipoNo **parmtop){
+    struct tipoNo *aux;
+    aux = *parmtop;
+    printf("Destruindo a lista.\n");
+    while(aux != NULL){
+        *parmtop = (*parmtop) -> prox;
+        free(aux);
+        aux = *parmtop;
+    }
+}
+
+int contarlista(struct tipoNo *parm){
+    int qtd = 0;
+    struct tipoNo *aux;
+    aux = parm;
+    while(aux !=NULL){
+        qtd = qtd + 1;
+        aux = aux -> prox;
+    }
+    return qtd;
+}
+
+int somalista(struct tipoNo *parm){
+    int soma = 0;
+    struct tipoNo *aux;
+    aux = parm;
+    while(aux !=NULL){
+        soma = soma + aux -> valor;
+        aux = aux -> prox;
+    }
+    return soma;
+}
+
+void mostramedia(struct tipoNo *parm, int soma, int qtd){
+    float media;
+    struct tipoNo *aux;
+    aux = parm;
+    media = soma/qtd;
+    printf("\nMostrando valores acima da média:\n");
+    while(aux !=NULL){
+        if(aux -> valor > media){
+            printf("Valor: %i \n", aux -> valor);
+        }
+        aux = aux -> prox;
+    }
+}
+
+void pesquisalista(struct tipoNo *parm, int qtd){
+    struct tipoNo *aux;
+    int i = 0, pesq;
+    aux = parm;
+    printf("Digite um valor para pesquisar na lista: ");
+    scanf("%i", &pesq);
+    while(aux !=NULL){
+        if(pesq == aux -> valor){
+        i = i+1;
+        if(i == 1){
+            printf("Valor encontrado: \n");
+        }
+        printf("Posição: %i \n", qtd);    
+        }
+        aux = aux -> prox;
+        qtd = qtd-1;
+    }
+    if(i==0){
+           printf("Valor não encontrado. \n"); 
+        }
+}
+
+
+
